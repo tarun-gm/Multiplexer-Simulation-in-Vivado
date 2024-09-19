@@ -62,33 +62,19 @@ Truth Table
 Verilog Code
 
 4:1 MUX Gate-Level Implementation
-
-// mux4_to_1_gate.v
-module mux4_to_1_gate (
-    input wire A,
-    input wire B,
-    input wire C,
-    input wire D,
-    input wire S0,
-    input wire S1,
-    output wire Y
-);
-    wire not_S0, not_S1;
-    wire A_and, B_and, C_and, D_and;
-
-    // Inverters for select lines
-    not (not_S0, S0);
-    not (not_S1, S1);
-
-    // AND gates for each input with select lines
-    and (A_and, A, not_S1, not_S0);
-    and (B_and, B, not_S1, S0);
-    and (C_and, C, S1, not_S0);
-    and (D_and, D, S1, S0);
-
-    // OR gate to combine all AND gate outputs
-    or (Y, A_and, B_and, C_and, D_and);
+module multiplexer(s1,s0,a,b,c,d,y);
+input s1,s0,a,b,c,d;
+output y;
+wire[3:0]w;
+and g1(w[0],~s1,~s0,a);
+and g2(w[1],~s1,s0,b);
+and g3(w[2],s1,~s0,c);
+and g4(w[3],s1,s0,d);
+or g5(y,w[0],w[1],w[2],w[3]);
 endmodule
+
+![Screenshot 2024-09-19 135610](https://github.com/user-attachments/assets/928abc19-5021-4c5d-a321-a2020f2ea22e)
+
 
 4:1 MUX Data Flow Implementation
 
