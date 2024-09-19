@@ -78,21 +78,19 @@ endmodule
 
 4:1 MUX Data Flow Implementation
 
-// mux4_to_1_dataflow.v
-module mux4_to_1_dataflow (
-    input wire A,
-    input wire B,
-    input wire C,
-    input wire D,
-    input wire S0,
-    input wire S1,
-    output wire Y
+module mux_4to1_dataflow (
+    input wire a,b,c,d,   
+    input wire S0, S1,           
+    output wire Y                
 );
-    assign Y = (~S1 & ~S0 & A) |
-               (~S1 & S0 & B) |
-               (S1 & ~S0 & C) |
-               (S1 & S0 & D);
+assign Y = (S1 == 0 && S0 == 0) ? a :
+               (S1 == 0 && S0 == 1) ? b :
+               (S1 == 1 && S0 == 0) ? c :
+               (S1 == 1 && S0 == 1) ? d : 1'b0;
+
 endmodule
+
+![Screenshot 2024-09-19 135610](https://github.com/user-attachments/assets/928abc19-5021-4c5d-a321-a2020f2ea22e)
 
 4:1 MUX Behavioral Implementation
 
